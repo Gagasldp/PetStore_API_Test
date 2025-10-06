@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="PetStore API" tests="16" time="16.411">
+  <testsuite name="TC01-Tambah Pet Valid" id="da4ff362-4255-45f7-8104-3645d65418c3" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="3.757">
+    <testcase name="Status code is 200" time="3.757" classname="Tc01TambahPetValid"/>
+    <testcase name="Response contains valid pet info" time="3.757" classname="Tc01TambahPetValid"/>
+  </testsuite>
+  <testsuite name="TC02-Get Pet by ID" id="87178987-d005-432b-8ed3-43f66d7e1cd2" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="0.640">
+    <testcase name="Status code is 200" time="0.640" classname="Tc02GetPetById"/>
+    <testcase name="Pet data sesuai ID sebelumnya" time="0.640" classname="Tc02GetPetById"/>
+  </testsuite>
+  <testsuite name="TC03-Update Pet Valid" id="abbb2ef1-6466-498c-b851-3391439bc9ad" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="0.621">
+    <testcase name="Status code is 200" time="0.621" classname="Tc03UpdatePetValid"/>
+    <testcase name="Update berhasil" time="0.621" classname="Tc03UpdatePetValid"/>
+  </testsuite>
+  <testsuite name="TC04-Search pet by Status" id="c094c9ef-7a6c-4d3a-bb5d-895a5093a45b" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="1" errors="0" time="2.516">
+    <testcase name="Response punya status" time="2.516" classname="Tc04SearchPetByStatus">
+      <failure type="AssertionFailure" message="expected [ { id: 8410, …(5) }, …(391) ] to have property 'status'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC04-Search pet by Status.]]>
+        <![CDATA[Test description: Response punya status.]]>
+        <![CDATA[Error message: expected [ { id: 8410, …(5) }, …(391) ] to have property 'status'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected [ { id: 8410, …(5) }, …(391) ] to have property 'status'
+   at Object.eval sandbox-script.js:1:4).]]>
+      </failure>
+    </testcase>
+    <testcase name="Status sesuai expected" time="2.516" classname="Tc04SearchPetByStatus"/>
+  </testsuite>
+  <testsuite name="TC05-Tambah Order" id="522a6249-f920-4641-8300-f6ed9548cdcb" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="2" errors="0" time="1.154">
+    <testcase name="Status code is 200" time="1.154" classname="Tc05TambahOrder">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC05-Tambah Order.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 400
+   at Object.eval sandbox-script.js:1:5).]]>
+      </failure>
+    </testcase>
+    <testcase name="Response adalah object order valid" time="1.154" classname="Tc05TambahOrder">
+      <failure type="AssertionFailure" message="expected { code: 400, type: 'unknown', …(1) } to have property 'id'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC05-Tambah Order.]]>
+        <![CDATA[Test description: Response adalah object order valid.]]>
+        <![CDATA[Error message: expected { code: 400, type: 'unknown', …(1) } to have property 'id'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected { code: 400, type: 'unknown', …(1) } to have property 'id'
+   at Object.eval sandbox-script.js:2:5).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="TC06-Get orderID" id="13c3ce12-2862-4472-bc81-6f73032a2739" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="2" errors="0" time="0.638">
+    <testcase name="Status code is 200" time="0.638" classname="Tc06GetOrderId">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 404">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC06-Get orderID.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 404.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 404
+   at Object.eval sandbox-script.js:1:6).]]>
+      </failure>
+    </testcase>
+    <testcase name="Pet berhasil dihapus" time="0.638" classname="Tc06GetOrderId">
+      <failure type="AssertionFailure" message="expected { code: 404, type: 'unknown', …(1) } to have property 'message' of '1001', but got 'java.lang.NumberFormatException: For …'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC06-Get orderID.]]>
+        <![CDATA[Test description: Pet berhasil dihapus.]]>
+        <![CDATA[Error message: expected { code: 404, type: 'unknown', …(1) } to have property 'message' of '1001', but got 'java.lang.NumberFormatException: For …'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected { code: 404, type: 'unknown', …(1) } to have property 'message' of '1001', but got 'java.lang.NumberFormatException: For …'
+   at Object.eval sandbox-script.js:2:6).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="TC07-Buat user baru" id="22943d5b-ad03-45f8-836e-bdc7a55df581" timestamp="2025-10-05T12:10:53.698Z" tests="1" failures="0" errors="0" time="0.593">
+    <testcase name="Status code 200" time="0.593" classname="Tc07BuatUserBaru"/>
+  </testsuite>
+  <testsuite name="TC08-Get data not found" id="1d6477e3-d199-4c82-bf0b-b40ea58df308" timestamp="2025-10-05T12:10:53.698Z" tests="1" failures="0" errors="0" time="0.387">
+    <testcase name="Status code 404" time="0.387" classname="Tc08GetDataNotFound"/>
+  </testsuite>
+  <testsuite name="TC09-Post dengan body kosong" id="2a9817c2-1cfc-47f0-9722-a0e365ac4743" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="0.553">
+    <testcase name="Status code 200 atau 400 (tergantung behavior API)" time="0.553" classname="Tc09PostDenganBodyKosong"/>
+    <testcase name="Response valid walau body kosong" time="0.553" classname="Tc09PostDenganBodyKosong"/>
+  </testsuite>
+  <testsuite name="TC10-PUT dengan ID invalid" id="f0bd086a-ccdd-49d0-b604-1e2db9a60232" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="1" errors="0" time="0.569">
+    <testcase name="Status code 400 atau 404 (invalid pet ID)" time="0.569" classname="Tc10PutDenganIdInvalid">
+      <failure type="AssertionFailure" message="expected [ 400, 404 ] to include 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC10-PUT dengan ID invalid.]]>
+        <![CDATA[Test description: Status code 400 atau 404 (invalid pet ID).]]>
+        <![CDATA[Error message: expected [ 400, 404 ] to include 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected [ 400, 404 ] to include 200
+   at Object.eval sandbox-script.js:1:10).]]>
+      </failure>
+    </testcase>
+    <testcase name="Response mengandung pesan error atau kosong" time="0.569" classname="Tc10PutDenganIdInvalid"/>
+  </testsuite>
+  <testsuite name="TC11-Hapus ID random" id="21ae9c8d-2ad2-446c-90f0-f8f20656ea2a" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="0.703">
+    <testcase name="Status code 404 (data tidak ditemukan)" time="0.703" classname="Tc11HapusIdRandom"/>
+    <testcase name="Body kosong diperbolehkan untuk 404" time="0.703" classname="Tc11HapusIdRandom"/>
+  </testsuite>
+  <testsuite name="TC12-Get invalid order" id="81e0c7a1-f5c4-4473-99d5-3a2c848857b7" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="1" errors="0" time="0.724">
+    <testcase name="Status code 404 atau 400 (order tidak ditemukan)" time="0.724" classname="Tc12GetInvalidOrder"/>
+    <testcase name="Response mengandung pesan not found atau invalid" time="0.724" classname="Tc12GetInvalidOrder">
+      <failure type="AssertionFailure" message="Invalid Chai property: or. Did you mean &quot;of&quot;?">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC12-Get invalid order.]]>
+        <![CDATA[Test description: Response mengandung pesan not found atau invalid.]]>
+        <![CDATA[Error message: Invalid Chai property: or. Did you mean "of"?.]]>
+        <![CDATA[Stacktrace: Error: Invalid Chai property: or. Did you mean "of"?
+   at Object.eval sandbox-script.js:2:12).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="TC13-Order body invalid" id="57452485-f4c2-4d3a-a481-e6e3d166b1bc" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="0.702">
+    <testcase name="Status code 400 atau 500 (invalid input)" time="0.702" classname="Tc13OrderBodyInvalid"/>
+    <testcase name="Response mengandung invalid input atau tetap object" time="0.702" classname="Tc13OrderBodyInvalid"/>
+  </testsuite>
+  <testsuite name="TC14-Post user body null" id="9cd08920-c1af-427d-822e-c6c2736002e0" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="0" errors="0" time="0.720">
+    <testcase name="Status code 400 atau 200 (tergantung API)" time="0.720" classname="Tc14PostUserBodyNull"/>
+    <testcase name="Response mengandung invalid input atau default message" time="0.720" classname="Tc14PostUserBodyNull"/>
+  </testsuite>
+  <testsuite name="TC15-1 Delete order valid" id="a934dd63-ab72-455b-af56-5f700236f09c" timestamp="2025-10-05T12:10:53.698Z" tests="1" failures="1" errors="0" time="1.205">
+    <testcase name="Status code 200 (order berhasil dihapus)" time="1.205" classname="Tc151DeleteOrderValid">
+      <failure type="AssertionFailure" message="expected 404 to deeply equal 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC15-1 Delete order valid.]]>
+        <![CDATA[Test description: Status code 200 (order berhasil dihapus).]]>
+        <![CDATA[Error message: expected 404 to deeply equal 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 404 to deeply equal 200
+   at Object.eval sandbox-script.js:1:15).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="TC15-2 Get order deleted" id="7f1629aa-cbcf-485f-87b5-25c1a440fd40" timestamp="2025-10-05T12:10:53.698Z" tests="2" failures="1" errors="0" time="0.929">
+    <testcase name="Status code 404 setelah delete" time="0.929" classname="Tc152GetOrderDeleted"/>
+    <testcase name="Response menunjukkan order not found" time="0.929" classname="Tc152GetOrderDeleted">
+      <failure type="AssertionFailure" message="expected 'java.lang.numberformatexception: for …' to include 'not'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d85b06b4-653a-4fc0-9847-06b104f5b51b.]]>
+        <![CDATA[Collection name: PetStore API.]]>
+        <![CDATA[Request name: TC15-2 Get order deleted.]]>
+        <![CDATA[Test description: Response menunjukkan order not found.]]>
+        <![CDATA[Error message: expected 'java.lang.numberformatexception: for …' to include 'not'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 'java.lang.numberformatexception: for …' to include 'not'
+   at Object.eval sandbox-script.js:2:16).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>

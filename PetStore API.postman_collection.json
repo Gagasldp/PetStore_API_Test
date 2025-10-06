@@ -1,0 +1,911 @@
+{
+	"info": {
+		"_postman_id": "d85b06b4-653a-4fc0-9847-06b104f5b51b",
+		"name": "PetStore API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40962057",
+		"_collection_link": "https://galactic-rocket-512692.postman.co/workspace/BCA-VA~e5814c4e-77c1-4fe3-829b-462a06088709/collection/40962057-d85b06b4-653a-4fc0-9847-06b104f5b51b?action=share&source=collection_link&creator=40962057"
+	},
+	"item": [
+		{
+			"name": "TC01-Tambah Pet Valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"pm.test(\"Response contains valid pet info\", () => {\r",
+							"    pm.expect(res).to.be.an(\"object\");\r",
+							"    pm.expect(res).to.have.property(\"id\");\r",
+							"    pm.expect(res).to.have.property(\"name\");\r",
+							"});\r",
+							"// Save ID buat chaining ke TC02–TC06\r",
+							"pm.environment.set(\"petId\", res.id);\r",
+							"console.log(\"🔗 Chained Variable petId:\", pm.environment.get(\"petId\"));\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1001,\r\n  \"name\": \"doggie\",\r\n  \"status\": \"available\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC02-Get Pet by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"pm.test(\"Pet data sesuai ID sebelumnya\", () => {\r",
+							"    pm.expect(res.id).to.eql(Number(pm.environment.get(\"petId\")));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{petId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{petId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC03-Update Pet Valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"pm.test(\"Update berhasil\", () => {\r",
+							"    pm.expect(res).to.have.property(\"id\");\r",
+							"    pm.expect(res.name.toLowerCase()).to.include(\"doggie\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{petId}},\r\n  \"name\": \"doggie-updated\",\r\n  \"status\": \"sold\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC04-Search pet by Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response punya status\", () => {\r",
+							"    pm.expect(res).to.have.property(\"status\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status sesuai expected\", () => {\r",
+							"    if (res.status) {\r",
+							"        pm.expect(res.status).to.eql(\"sold\");\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ Tidak ada field 'status' di response:\", res);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC05-Tambah Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response adalah object order valid\", () => {\r",
+							"    pm.expect(res).to.be.an(\"object\");\r",
+							"    pm.expect(res).to.have.property(\"id\");\r",
+							"    pm.expect(res).to.have.property(\"petId\");\r",
+							"    pm.expect(res).to.have.property(\"status\", \"placed\");\r",
+							"    pm.expect(res.complete).to.be.true;\r",
+							"});\r",
+							"\r",
+							"// Simpan orderId buat chaining ke TC06–TC15\r",
+							"pm.environment.set(\"orderId\", res.id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{orderId}},\r\n  \"petId\": {{petId}},\r\n  \"quantity\": 1,\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/store/order",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC06-Get orderID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"pm.test(\"Pet berhasil dihapus\", () => {\r",
+							"    pm.expect(res).to.have.property(\"message\", pm.environment.get(\"petId\").toString());\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/store/order/{{orderId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"order",
+						"{{orderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC07-Buat user baru",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"pm.expect(res).to.have.property(\"message\");\r",
+							"pm.environment.set(\"userId\", res.message);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 3001,\r\n  \"username\": \"gagas01\",\r\n  \"firstName\": \"Gagas\",\r\n  \"lastName\": \"Prastyo\",\r\n  \"email\": \"gagas@mail.com\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"0812345678\",\r\n  \"userStatus\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC08-Get data not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"pm.expect(res.message).to.eql(\"Pet not found\");\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/99999999",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"99999999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC09-Post dengan body kosong",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const statusCode = pm.response.code;\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code 200 atau 400 (tergantung behavior API)\", () => {\r",
+							"    pm.expect([200, 400]).to.include(statusCode);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response valid walau body kosong\", () => {\r",
+							"    if (res.message) {\r",
+							"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");\r",
+							"    } else {\r",
+							"    console.warn(\"⚠️ Response tidak punya 'message':\", res);\r",
+							"    }\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC10-PUT dengan ID invalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const statusCode = pm.response.code;\r",
+							"let res;\r",
+							"\r",
+							"try {\r",
+							"    res = pm.response.json();\r",
+							"} catch (e) {\r",
+							"    console.warn(\"⚠️ Response bukan JSON valid:\", pm.response.text());\r",
+							"    res = {};\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code 400 atau 404 (invalid pet ID)\", () => {\r",
+							"    pm.expect([400, 404]).to.include(statusCode);\r",
+							"});\r",
+							"\r",
+							"// Assertion fleksibel tergantung API\r",
+							"pm.test(\"Response mengandung pesan error atau kosong\", () => {\r",
+							"    if (pm.response.code === 200) {\r",
+							"    pm.expect(res.id).to.exist;\r",
+							"} else {\r",
+							"    console.log(\"ℹ️ Tidak ada id karena response bukan 200\");\r",
+							"}\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 9876546,\r\n  \"name\": \"ghost-pet\",\r\n  \"status\": \"available\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC11-Hapus ID random",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Pastikan status code 404\r",
+							"pm.test(\"Status code 404 (data tidak ditemukan)\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"// ✅ Coba parse JSON hanya kalau body tidak kosong\r",
+							"let rawBody = pm.response.text();\r",
+							"if (rawBody && rawBody.trim() !== \"\") {\r",
+							"    try {\r",
+							"        let jsonData = pm.response.json();\r",
+							"        pm.test(\"Response mengandung pesan not found (jika ada body)\", function () {\r",
+							"            pm.expect(jsonData.message.toLowerCase()).to.include(\"not found\");\r",
+							"        });\r",
+							"    } catch (e) {\r",
+							"        console.log(\"⚠️ Body bukan JSON valid, skip parse:\", e);\r",
+							"    }\r",
+							"} else {\r",
+							"    console.log(\"ℹ️ Body kosong (sesuai expected untuk 404)\");\r",
+							"    pm.test(\"Body kosong diperbolehkan untuk 404\", function () {\r",
+							"        pm.expect(rawBody).to.be.oneOf([\"\", \" \"]);\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/999999",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"999999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC12-Get invalid order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"let res;\r",
+							"\r",
+							"try {\r",
+							"    res = pm.response.json();\r",
+							"} catch (e) {\r",
+							"    res = {};\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code 404 atau 400 (order tidak ditemukan)\", () => {\r",
+							"    pm.expect([400, 404]).to.include(status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response mengandung pesan not found atau invalid\", () => {\r",
+							"    if (res.message) {\r",
+							"        pm.expect(res.message.toLowerCase()).to.include(\"not\").or.include(\"invalid\");\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ Response tidak ada message field:\", JSON.stringify(res));\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/store/order/999999",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"order",
+						"999999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC13-Order body invalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"let res;\r",
+							"\r",
+							"try {\r",
+							"    res = pm.response.json();\r",
+							"} catch (e) {\r",
+							"    res = {};\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code 400 atau 500 (invalid input)\", () => {\r",
+							"    pm.expect([400, 500, 200]).to.include(status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response mengandung invalid input atau tetap object\", () => {\r",
+							"    if (res && Object.keys(res).length > 0) {\r",
+							"        console.log(\"🧾 Response:\", res);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ Response kosong untuk invalid input, dianggap valid.\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{orderId}},\r\n  \"petId\": 1001,\r\n  \"quantity\": \"abc\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/store/order",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC14-Post user body null",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"let res;\r",
+							"\r",
+							"try {\r",
+							"    res = pm.response.json();\r",
+							"} catch (e) {\r",
+							"    res = {};\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code 400 atau 200 (tergantung API)\", () => {\r",
+							"    pm.expect([200, 400, 500]).to.include(status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response mengandung invalid input atau default message\", () => {\r",
+							"    if (res.message) {\r",
+							"        pm.expect(res.message.toString()).to.be.a(\"string\");\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ Tidak ada message di response user kosong.\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC15-1 Delete order valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"let res;\r",
+							"\r",
+							"try {\r",
+							"    res = pm.response.json();\r",
+							"} catch (e) {\r",
+							"    res = {};\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code 200 (order berhasil dihapus)\", () => {\r",
+							"    pm.expect(status).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"if (res.message) {\r",
+							"    pm.environment.set(\"deletedOrderId\", res.message);\r",
+							"    console.log(\"🗑️ Deleted Order ID:\", res.message);\r",
+							"} else {\r",
+							"    console.warn(\"⚠️ Tidak ada message di DELETE response.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/store/order/{{orderId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"order",
+						"{{orderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TC15-2 Get order deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"let res;\r",
+							"\r",
+							"try {\r",
+							"    res = pm.response.json();\r",
+							"} catch (e) {\r",
+							"    res = {};\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code 404 setelah delete\", () => {\r",
+							"    pm.expect([404, 400]).to.include(status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response menunjukkan order not found\", () => {\r",
+							"    if (res.message) {\r",
+							"        pm.expect(res.message.toLowerCase()).to.include(\"not\").or.include(\"invalid\");\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ Tidak ada message field di response GET setelah delete.\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/store/order/{{orderId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"order",
+						"{{orderId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
